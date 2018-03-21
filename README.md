@@ -1,2 +1,2 @@
 # IntroML
-A sShort Introduction to ML
+A Short (2 days) Introduction to Machine Learning I gave in 2018 in executive training.
