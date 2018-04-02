@@ -1,0 +1,112 @@
+
+
+Question 1: Which of the following are machine learning libraries?
+1) scikit-learn
+2) caffe
+3) cacao
+4) clio
+Correction: 1, 2.
+
+Question 2: What are the four steps of a data analysis workflow?
+1) Plan, do, check, act
+2) Map, reduce, sum, square
+3) Collect, analyze, predict, react
+4) Plan, analyze, react, feedback
+Correction: 3.
+Answer 1 is management and continual improvement method. Answer 2 begins with "map-reduce" which is a key notion in distributed computing for big data.
+
+Question 3: Name the three main formal tasks tackled by Machine Learning.
+- Supervized Learning
+- Unsupervized Learning
+- Reinforcement Learning
+- Remote Learning
+Correction: 1,2,3.
+
+Question 4: To what formal task does the prediction of a Remaining Useful Life (in predictive maintenance) belong?
+1) Unsupervized learning, it is an anomaly detection task
+2) Reinforcement learning, it is an optimal control task
+3) Supervized learning, it is a classification task
+4) Supervized learning, it is a regression task
+Correction: 4
+
+Question 5: What is the False positive rate?
+1) Number of false positive (false alarms) divided by the number of alarms raised.
+2) Number of false positive (false alarms) divided by the number of negatives (no failure situations).
+3) Number of true positive (correct alarms) divided by the number of alarms raised.
+4) Number of true positive (correct alarms) divided by the number of positives (failure situations).
+Correction: 2
+Answer 1 is the "false discovery rate". Answer 3 is the "precision". Answer 4 is the "recall" or "sensitivity".
+
+Question 6: A Support Vector Machine with a Gaussian kernel...
+1) ... minimizes the margin.
+2) ... is generally computed on offline data.
+3) ... requires absolutely no parameter tuning.
+4) ... is very simple to store in memory after it has been computed.
+Correction: 2, 4.
+Answer 1 is false because it's actually the opposite. Answer 3 is false because one needs to tune the C and gamma parameters (at least).
+
+Question 7: The naive Bayes hypothesis...
+1) ... assumes that all problem variables are conditionally independent
+2) ... assumes that input descriptors are conditionally independent given the associated output label.
+3) ... allows to greatly simplify the computation of posterior probabilities
+4) ... is almost never verified in practice but naive Bayes classifiers perform really well nonetheless.
+Correction: 2,3,4.
+
+Question 8: Gaussian Processes...
+1) ... are a density estimation method.
+2) ... provide a prediction method for continuous values.
+3) ... allow to predict the average output value but also it's variance.
+4) ... is a good tool for prediction uncertainty estimation.
+Correction: 2,3,4.
+
+Question 9: Artifical Neural Networks...
+1) ... have been discovered in the XXIst century.
+2) ... are a graph where information flows from the input to the output.
+3) ... make use of activation functions such as the sigmoid function.
+4) ... work exactly like natural neural connections
+Correction: 2,3
+
+Question 10: A single layered artificial neural network...
+1) ... can approximate any function to any desired prediction.
+2) ... will always outperform other methods.
+3) ... is insensitive to overfitting.
+4) ... can be trained via backpropagation.
+Correction: 1,4
+
+Question 10: Deep Learning...
+1) ... was made possible by the availability of data and processing power.
+2) ... refers to training Artificial Neural Networks with many layers.
+3) ... is restricted to Convolutional Neural Networks.
+4) ... always requires lots of data.
+Correction: 1,2.
+Answer 3: lots of other types of Deep Networks, as recurrent neural networks, autoencoders, bayesian confidence machines, etc.
+Answer 4: not necessarily, in particular with pre-trained networks.
+
+Question 11: A decision tree...
+1) ... can represent any regression of classification function.
+2) ... can be easily explained.
+3) ... has leaves of different colors.
+4) ... has several different roots.
+Correction: 2.
+
+Question 12: A random forest...
+1) ... is an unreliable predictor.
+2) ... requires a lot of hand-tuning.
+3) ... exploits the sensitivity of decision trees to small changes in the data to build a robust predictor.
+4) ... is prone to overfitting.
+Correction: 3.
+
+Question 13: The choice of a Machine Learning algorithm (and more generally a data analysis architecture)...
+1) ... should be handled by data scientists only.
+2) ... requires the combined expertise of data science experts and operational specialists.
+3) ... is always reversible.
+4) ... is a costly benchmarking process.
+Correction: 2.
+
+Question 14: A Data Scientist...
+1) ... should have a decent knowledge in maths, algorithms, databases and implementations.
+2) ... relies on a scientific literature that is always very mature.
+3) ... performs better when isolated from field data
+4) ... needs to master all the data processing steps, from collection to decision support
+Correction: 1.
+
