@@ -13,7 +13,7 @@ Question 2: What are the four steps of a data analysis workflow?
 3) Collect, analyze, predict, react
 4) Plan, analyze, react, feedback
 Correction: 3.
-Answer 1 is management and continual improvement method. Answer 2 begins with "map-reduce" which is a key notion in distributed computing for big data.
+Answer 1 is a management and continual improvement method. Answer 2 begins with "map-reduce" which is a key notion in distributed computing for big data.
 
 Question 3: Name the three main formal tasks tackled by Machine Learning.
 - Supervized Learning
