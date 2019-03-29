@@ -1,13 +1,13 @@
 # IntroML
 
-A Short (2 days) Introduction to Machine Learning I gave in 2018 in an executive training session.
+A Short (2 days) Introduction to Machine Learning designed for an executive training session.
 
 # Requirements
 
-numpy, scipy, scikit-learn (all included in Anaconda for instance)<br>
-nltk (conda install nltk)<br>
-keras (conda install keras)<br>
-tensorflow (conda install tensorflow)<br>
-graphviz (conda install graphviz)
+- numpy, scipy, scikit-learn (all included in Anaconda for instance)
+- nltk (conda install nltk)
+- keras (conda install keras)
+- tensorflow (conda install tensorflow)
+- graphviz (conda install graphviz)
 
 
