@@ -118,13 +118,13 @@ By the end of the class, you should be able to:
 \begin{frame}{Case studies}
 Let's list and discuss some cases from your experience and from the literature.
 \begin{itemize}
-\item ~[Your cases here!]
+\item ~[Your cases here!]\pause
 \item Predictive maintenance%(RUL/TTF prediction, proba of failure, anomaly detection)
 \item Market segmentation%(grouping customer habits)
 \item Demand forecast
 \item Preliminary design studies
 \item Clinical diagnosis
-\item Documentation management.
+\item Documentation management
 \item Satellite imaging
 \end{itemize}
 \end{frame}
@@ -280,11 +280,11 @@ Let's try to give a general definition.\\
 \end{center}
 \end{overlayarea}
 \begin{overlayarea}{\textwidth}{1cm}
-\tiny Image sources:
-\only<1>{\href{https://commons.wikimedia.org/wiki/File:Cardiac_surgery_operating_room.jpg}{Wikimedia commons}}
-\only<2>{\href{https://commons.wikimedia.org/wiki/File:Crypto_Composite_home_page.png}{Wikimedia commons}}
-\only<3>{\href{http://www.urbanthreads.com/productImages/regularSize/UTH4670.jpg}{Seven.jpg}}
-\only<4>{\href{https://www.iconfinder.com/icons/118781/mail_message_new_icon}{Iconfinder}}
+\tiny Image sources: %
+\only<1>{\href{https://commons.wikimedia.org/wiki/File:Cardiac_surgery_operating_room.jpg}{Wikimedia commons}}%
+\only<2>{\href{https://commons.wikimedia.org/wiki/File:Crypto_Composite_home_page.png}{Wikimedia commons}}%
+\only<3>{\href{http://www.urbanthreads.com/productImages/regularSize/UTH4670.jpg}{[link]}}%
+\only<4>{\href{https://www.iconfinder.com/icons/118781/mail_message_new_icon}{Iconfinder}}%
 \only<5>{\href{http://clipart-library.com/white-people-cliparts.html}{People.jpg} / 
 \href{http://journals.sagepub.com/doi/pdf/10.1207/s15328023top1701_10}{Writing to Discuss: Use of a Clustering Technique} / 
 \href{https://commons.wikimedia.org/wiki/File:DNA_microarray.svg}{DNA microarray}}
@@ -298,7 +298,7 @@ What does ML do? 3 main tasks.\\
 \begin{tabular}{|c|c|c|c|}
 \hline
 \makecell[{{p{0.07\textwidth}}}]{\textbf{Task}} &
-\makecell[{{p{0.27\textwidth}}}]{\centering Supervized\\ Learning} & \makecell[{{p{0.27\textwidth}}}]{\centering Unsupervized Learning} & \makecell[{{p{0.27\textwidth}}}]{\centering Reinforcement Learning}\\
+\makecell[{{p{0.27\textwidth}}}]{\centering Supervised\\ Learning} & \makecell[{{p{0.27\textwidth}}}]{\centering Unsupervised Learning} & \makecell[{{p{0.27\textwidth}}}]{\centering Reinforcement Learning}\\
 \hline
 \makecell[{{p{0.07\textwidth}}}]{\textbf{Goal}} &
 \makecell[{{p{0.27\textwidth}}}]{\centering Learn a function, $f(x)=y$} & \makecell[{{p{0.27\textwidth}}}]{\centering Find groups and correlations, $x\in C$} & \makecell[{{p{0.27\textwidth}}}]{\centering Optimal control, $f(x)=u \ / \ \max\sum r$}\\
@@ -351,24 +351,30 @@ Ability to generalize:
 \item[BD] Big Data refers to working with datasets that have large Volume, Variety, Velocity (, Veracity, and Value).
 \item[DL] Deep Learning is Machine Learning with Deep Neural Networks.
 \item[threat] ML / Data Science / Big Data are as much of a threat (to jobs, the society, the economy\ldots) as the combustion engine was in the XIXth century.
+\item[ethics] Technical problems are not just technical problems and solutions \emph{always} imply some tradeoff. Who bears the (moral) responsibility?
 \end{itemize}
+\begin{center}
+	\includegraphics[width=5cm]{img/datascientist.png}
+\end{center}
 \end{frame}
 
 \begin{frame}{ML software}
 Software:
 \begin{itemize}
-\item Many free libraries: scikit-learn, tensorflow, caffe\ldots check \url{www.mloss.org} if you're curious.
+\item Many free software libraries: scikit-learn, tensorflow, pytorch\ldots check \url{www.mloss.org} if you're curious.
 \item Free environments: Weka, RStudio\ldots
 \item Commercial embedded solutions (more or less specialized): Matlab, IBM, Microsoft\ldots
 \end{itemize}
+\vspace{2em}
+Short ``time to market'' and high innovation pace.
 \end{frame}
 
-\begin{frame}{The process of (Un)Supervized Learning}
+\begin{frame}{The process of (Un)Supervised Learning}
 \begin{center}
 \includegraphics[height=7cm]{img/process.png}
 \end{center}
 \vspace{-0.5cm}
-{\footnotesize From \textbf{Supervized Machine Learning: A Review of Classification Techniques}, S. B. Kotsiantis, \textit{Informatica}, 31:249--268, 2007.}
+{\footnotesize From \textbf{Supervised Machine Learning: A Review of Classification Techniques}, S. B. Kotsiantis, \textit{Informatica}, 31:249--268, 2007.}
 \end{frame}
 
 \begin{frame}{Relating your needs and ML}
@@ -377,13 +383,13 @@ Software:
 Back to the example of Predictive Maintenance tasks.
 \begin{itemize}
 \item Visualizing system state\\
-\hspace{1cm} $\rightarrow$ Dimensionnality reduction (Unsupervized learning)
+\hspace{1cm} $\rightarrow$ Dimensionnality reduction (Unsupervised learning)
 \item Detecting anomalies\\
-\hspace{1cm} $\rightarrow$ Density estimation (Unsupervized learning)
+\hspace{1cm} $\rightarrow$ Density estimation (Unsupervised learning)
 \item Predicting RUL or TTF\\
-\hspace{1cm} $\rightarrow$ Regression (Supervized learning)
+\hspace{1cm} $\rightarrow$ Regression (Supervised learning)
 \item Predicting failure in $N$ cycles\\
-\hspace{1cm} $\rightarrow$ Classification (Supervized learning)
+\hspace{1cm} $\rightarrow$ Classification (Supervised learning)
 \end{itemize}
 }
 \visible<2->{
@@ -391,7 +397,7 @@ Back to the example of Predictive Maintenance tasks.
 \underline{Thinking like a Maintenance Engineer:}\\
 How can I monitor my system to manage my maintenance operations?\\
 \underline{Thinking like a Data Scientist:}\\
-Is this a supervized or an unsupervized problem? What available data?\\
+Is this a supervised or an unsupervised problem? What available data?\\
 %~\\
 \begin{block}{}
 Relate this example to your own field.\\
@@ -685,11 +691,12 @@ Deep Learning.}
 \begin{frame}{Extra things}
 \begin{itemize}
 \item Installing anaconda, jupyter, etc.
-\item ML research: arXiv, JMLR, MLJ, IEEE PAMI, NIPS, ICML, ICLR...
-\item datasets: Kaggle, UCI, ImageNet, CIFAR
+\item ML research: arXiv, JMLR, MLJ, IEEE PAMI, NeurIPS, ICML, ICLR...
+\item datasets: Kaggle, UCI, ImageNet, CIFAR...
 \item Other algorithms? (scikit-learn documentation or other notebooks)
 \item Dataviz: upstream methods (PCA...) and storytelling (Tableau...)
 \item What should I look for in a data scientist's CV?
+\item The price to pay for AI: individual responsibility, collective literacy, guiding principles.
 \end{itemize}
 \end{frame}
 
