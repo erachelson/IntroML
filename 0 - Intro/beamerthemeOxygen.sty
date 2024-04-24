@@ -1,0 +1,82 @@
+\usetheme{Rochester}
+
+\RequirePackage{pgf}
+
+\pgfdeclareimage[width=1.0\paperwidth,]{oxygen-header}{oxygen-header}
+
+\setbeamertemplate{blocks}[shadow=false]
+\setbeamercovered{transparent}
+
+\beamer@headheight=0.13\paperwidth
+
+\definecolor{laasblue}{RGB}{18,42,91}	
+\definecolor{laaslightblue}{RGB}{38,92,156}	
+\definecolor{oxygenred}{RGB}{163,0,59}	
+\definecolor{oxygengray}{HTML}{686868}
+\definecolor{oxygenlightgray}{HTML}{EEEEEE}
+\definecolor{oxygenblue}{HTML}{236EAF}
+\setbeamercolor*{Title bar}{fg=white}
+\setbeamercolor*{Main title}{fg=laasblue, bg=white}
+\setbeamercolor*{Location bar}{fg=laasblue,bg=oxygenlightgray}
+\setbeamercolor*{frametitle}{parent=Title bar}
+\setbeamercolor*{block title}{bg=oxygenblue,fg=white}
+\setbeamercolor*{block body}{bg=oxygenlightgray,fg=oxygengray}
+\setbeamercolor*{normal text}{bg=white,fg=oxygengray}
+\setbeamercolor*{section in head/foot}{bg=oxygenblue,fg=white}
+\setbeamercolor{item projected}{bg=oxygenred}
+\setbeamercolor{subitem projected}{bg=oxygenred}
+\setbeamertemplate{itemize item}{\color{oxygenred} \tiny $\blacksquare$}
+\setbeamertemplate{itemize subitem}{\color{oxygenred}$\blacktriangleright$}
+
+\usecolortheme[named=laasblue]{structure}
+
+\setbeamerfont{section in head/foot}{size=\tiny,series=\normalfont}
+\setbeamerfont{frametitle}{size=\Large}
+
+\setbeamercolor{titlelike}{parent=Main title}
+
+\setbeamertemplate{frametitle}
+{
+  \vskip-0.25\beamer@headheight
+  \vskip-\baselineskip
+  \vskip-0.2cm
+  %\hskip 1.3cm\usebeamerfont*{frametitle}\insertframetitle
+  \hskip 0cm\usebeamerfont*{frametitle}\insertframetitle
+  \vskip-0.10em
+  \hskip 0cm\usebeamerfont*{framesubtitle}\insertframesubtitle
+}
+
+\setbeamertemplate{headline}
+{
+  \includegraphics[width=1.0\paperwidth,height=8em]{oxygen-header}
+  %\pgfuseimage{oxygen-header}
+  \vskip -1.95cm
+  \linethickness{0px}
+
+  \framelatex{
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.25\beamer@headheight, ignorebg, rounded=false]{Title bar}
+    \usebeamerfont{section in head/foot}%
+   %\insertsectionnavigationhorizontal{0pt}{\hskip 1.66cm}{}%
+   %\insertsectionnavigationhorizontal{0pt}{\hskip .6\linewidth}{}\vskip0em
+   %\insertsubsectionnavigationhorizontal{0pt}{\hskip .6\linewidth}{}%
+  \end{beamercolorbox}
+  }
+
+%  \framelatex{
+%  \begin{beamercolorbox}[wd=\paperwidth,ht=0.7\beamer@headheight]{Title bar}
+%  \end{beamercolorbox}}
+	\vspace{44px}
+}
+
+\setbeamertemplate{footline}
+{
+  \linethickness{0pt}
+  \framelatex{
+  \begin{beamercolorbox}[leftskip=.2cm,wd=\paperwidth,ht=0.17\beamer@headheight,sep=0.1cm]{Location bar}
+    \usebeamerfont{section in head/foot}%
+    \insertshortauthor~|~\insertshorttitle
+    \hfill
+    \insertframenumber/\inserttotalframenumber
+  \end{beamercolorbox}}
+}
+\beamertemplatenavigationsymbolsempty

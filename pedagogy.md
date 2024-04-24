@@ -11,7 +11,6 @@ The trainees are encouraged to bring their own laptops with a working Anaconda d
 Specific packages needed:
 - numpy, scipy, scikit-learn (all included in Anaconda for instance)
 - nltk (conda install nltk)
-- keras (conda install keras)
-- tensorflow (conda install tensorflow)
+- pytorch (get install instructions on https://pytorch.org/)
 - graphviz (conda install graphviz)
 

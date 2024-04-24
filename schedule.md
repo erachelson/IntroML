@@ -3,7 +3,7 @@
 day 1:
 - 09:00 - 10:00 Introduction (from field problems to Machine Learning)
 - 10:00 - 10:30 The importance of pre-processing
-- 10:45 - 12:15 A geometrical approach to Machine Learning (an introduction to suppor vector machines and a bit of kernel theory)
+- 10:45 - 12:15 A geometrical approach to Machine Learning (an introduction to support vector machines and a bit of kernel theory)
 - 12:15 - 13:30 Lunch break
 - 13:30 - 17:30 A probabilistic approach to Machine Learning (Bayesian modeling, naive Bayes Classifiers and Gaussian Processes)
 

@@ -1,45 +1,43 @@
-\documentclass{beamer}
+\documentclass[10pt,a4paper,t,aspectratio=1610,dvipsnames]{beamer}
 
 \mode<presentation>
 {
-\usetheme{Copenhagen}
-%\usetheme{Boadilla}
-%\usecolortheme{seahorse}
-%\useoutertheme{infolines}
-%\useoutertheme[compress]{miniframes}
-%\setbeamercovered{transparent}
+	\usetheme{Oxygen}
+	%\usecolortheme{seahorse}%seahorse
 }
 
-%% \mode<presentation>
-%% {
-%% \usetheme{progressbar}
-%% \setbeamercovered{transparent}
-%% }
-
-%\usepackage[english]{babel}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
 \usepackage{mathptmx}
 \usepackage[scaled=.90]{helvet}
+\usepackage{courier}
 \usepackage[T1]{fontenc}
 \usepackage{xspace}
+\usepackage{tabularx}
 %\usepackage{appendixnumberbeamer}
-\usepackage[noend]{algorithmic}
+%\usepackage[noend]{algorithmic}
 %\usepackage[algo2e,vlined,algochapter,ruled,dotocloa]{algorithm2e}
 \usepackage{fancybox}
-\usepackage{algorithm}
-\usepackage[noend]{algorithmic}
+%\usepackage{algorithm}
+%\usepackage[noend]{algorithmic}
 \usepackage{amssymb,amsmath}
 % \usepackage{ulem}
 \usepackage{makecell}
-\usepackage{times}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage{graphicx}
+%\usepackage[dvipsnames]{xcolor}
+
+%\usepackage{times}
 \usepackage{bbding}
 
-\title[A few topics in Reinforcement Learning]{From Field problems to Machine Learning}
-\subtitle{An introduction to the Data Science workflow\\and a motivation to understand Machine Learning}
-%\title{The Optimal Swapping Problem during Nuclear Refueling Operations}
+%\title[A few topics in Reinforcement Learning]{From Field problems to Machine Learning}
+%\subtitle{An introduction to the Data Science workflow\\and a motivation to understand Machine Learning}
+\title{An introduction to Machine Learning}
+\subtitle{Acquiring key notions}
+
 
 
 \author{E. Rachelson}
@@ -51,7 +49,7 @@
 
 % This is only inserted into the PDF information catalog. Can be left
 % out.
-\subject{From Predictive Maintenance to Machine Learning}
+\subject{An introduction to ML}
 
 \setbeamerfont{bibliography entry author}{shape=\upshape,series=\bfseries,size=\footnotesize}%
 \setbeamerfont{bibliography entry title}{shape=\upshape,size=\scriptsize,series=\mdseries}
@@ -60,8 +58,16 @@
 
 \setbeamercolor{block}{bg=blue,fg=red}
 
-\beamertemplatenavigationsymbolsempty
-\setbeamertemplate{footline}[frame number]
+%\beamertemplatenavigationsymbolsempty
+%\setbeamertemplate{footline}[frame number]
+
+\newcommand{\thumbnail}[1]{\includegraphics[height=1.5em]{#1}}
+\newcommand{\researcher}{\thumbnail{img/researcher.png}}
+\newcommand{\graduate}{\thumbnail{img/graduate.png}}
+\newcommand{\class}{\includegraphics[width=.4cm]{img/class3.png}}
+\newcommand{\web}{\thumbnail{img/web.png}}
+\newcommand{\suitcase}{\includegraphics[width=.4cm]{img/suitcase.png}}
+\newcommand{\isae}{\thumbnail{img/isae.jpg}}
 
 \begin{document}
 
@@ -69,345 +75,438 @@
 \titlepage
 \end{frame}
 
-\begin{frame}{Schedule}
-\begin{enumerate}
-\item General introduction and motivation\\
-{\small \it How does ML fit within your business process.\\
-Why you should take time to understand what's under the hood in ML.}
-\item The importance of data pre-processing\\
-{\small \it A practical illustration.}
-\item A geometrical approach to ML\\
-{\small \it Support Vector Machines and a bit of kernel theory.}
-\item A probabilistic approach to ML\\
-{\small \it Naive Bayes Classification and Gaussian Processes.}
-\item A connectionist perspective \\
-{\small \it From mimicking the human brain to Artificial Neural Networks.\\
-Deep Learning.}
-\item Ensembles of explainable models\\
-{\small \it Decision Trees, Bagging and Random Forests.}
-\item Practical session, discussion and conclusion
-\end{enumerate}
+\begin{frame}{Discussion}
+	
+	\begin{center}
+		\vfill
+		Your expectations for this course?
+	\end{center}
+	
+	\vspace{3em}
+	{\footnotesize Let's hope they match what I have in store.\\
+	I'll try to adapt to fit your specific needs.}
 \end{frame}
 
-\begin{frame}{Course goals}
-\small
-By the end of the class, you should be able to:
-\begin{itemize}
-\item implement a generic workflow of data analysis for your application field;
-\item know the main bottlenecks and challenges of data-driven approaches;
-\item link some field problems to their formal Machine Learning counterparts;
-\item know the main categories of Machine Learning algorithms and which formal problem they solve;
-\item know the name and principles of some key methods in Machine Learning:
-\begin{itemize}
-\item SVM,
-\item kernel methods,
-\item Naive Bayes Classification,
-\item Gaussian Processes,
-\item Artificial Neural Networks,
-\item Deep Learning,
-\item Random Forests;
-\end{itemize} 
-\item know the existence of scikit-learn and its API.
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Course material}
-\small\url{https://github.com/erachelson/IntroML}
-\end{frame}
-
-\begin{frame}{Case studies}
-Let's list and discuss some cases from your experience and from the literature.
-\begin{itemize}
-\item ~[Your cases here!]\pause
-\item Predictive maintenance%(RUL/TTF prediction, proba of failure, anomaly detection)
-\item Market segmentation%(grouping customer habits)
-\item Demand forecast
-\item Preliminary design studies
-\item Clinical diagnosis
-\item Documentation management
-\item Satellite imaging
-\end{itemize}
-\end{frame}
-
-\begin{frame}{From tasks, to data, to ML}
-For all these cases, let's fill the table below, to build a common understanding of:
-\begin{itemize}
-\item the nature of data at stake
-\item the different tasks to automate
-\item the difficulties
-\end{itemize}
-~\\
-~\\
-\footnotesize
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-\thead{\begin{minipage}{1.3cm}\centering Use case\end{minipage}} & \thead{\begin{minipage}{1.3cm}\centering Type of data\end{minipage}} & \begin{minipage}{1.3cm}\centering Properties of data\end{minipage} & \begin{minipage}{1.3cm}\centering Task to automate\end{minipage} & \begin{minipage}{1.3cm}\centering Difficulties\end{minipage} & \begin{minipage}{1.3cm}\centering Comments\end{minipage}\\
-\hline
- & & & & & \\
-\hline
- & & & & & \\
-\hline
- & & & & & \\
-\hline
- & & & & & \\
-\hline
+\begin{frame}{Contents}
+\begin{tabular}{@{}ll}
+What this class is about: & key concepts in Machine Learning (ML)\\
+What it is not about: & data processing, AI, big data, etc.
 \end{tabular}
-\end{frame}
 
-\begin{frame}{The Data Scientist perspective}
-\centering \includegraphics[width=6cm]{img/How-can-i-help.jpg}
-\end{frame}
-
-\begin{frame}{Identified needs}
-Let's take the example of Predictive Maintenance.\\
-~\\
-We would like to build automated tools for the following tasks:
+\vspace{2em}
+\indent What this class is useful for:
 \begin{itemize}
-\item Visualize system state
-\item Identify anomalies
-\item Predict Remaining Useful Life (RUL) / Time To Failure (TTF)
-\item Predict failure occurrence or probability at a given horizon
+	\item[] Evaluate statements/projects/proposals about ML or using ML
+	\item[] Lay the ground for deeper exploration of technical ML topics
 \end{itemize}
-All this, in order to base our maintenance strategy on the (inferred) system state, rather than a general statistical trend.\\
-~\\
-\begin{block}{}
-Can you relate this task decomposition to the other use-cases we've seen earlier?
-\end{block}
-Traditionaly, all this is based on user expertise.\\
-Let's take a data-driven approach.
+
+\vspace{2em}
+Steps towards this goal:
+\begin{itemize}
+	\item Defining vocabulary, debunking misconceptions, naming tasks and problems
+	\item Situating ML within data analysis
+	\item Diving into the technicalities of 4 different perspectives on ML
+	\begin{itemize}
+		\item A geometrical perspective (support vector machines and more)
+		\item A probabilistic perspective (Bayesian modeling methods)
+		\item A connexionist perspective (neural networks and deep learning)
+		\item An ensemblist perspective (incl. random forests)
+	\end{itemize}
+\end{itemize}
 \end{frame}
 
-\begin{frame}{Data analysis workflow}
-\begin{enumerate}
-\item<1-> Collect
-\item<2-> Analyze
-\item<3-> Predict
-\item<4-> Decide
-\end{enumerate}
-\begin{overlayarea}{10cm}{4cm}
-\begin{block}{}
-\only<1>{
-\begin{itemize}
-\item Sensors deployment
-\item Historical data collection
-\item Integrated storage (datawarehouses) and retrieval issues
-\end{itemize}
-$\rightarrow$ Extract-Transform-Load (ETL) process\\
-More on ETL: \href{https://www.sas.com/en_us/insights/data-management/what-is-etl.html}{[link]}.\\
-The \emph{data engineer}'s job: data quality, management, availability.
-}
-\only<2>{
-\begin{itemize}
-\item data cleaning
-\item feature selection / engineering
-\item performance criteria
-\item algorithm selection
-\item parameters tuning
-\end{itemize}
-The \emph{data analyst} or \emph{data scientist}'s job.\\
-But can't be disconnected from field engineers on the task.
-}
-\only<3>{
-\begin{itemize}
-\item Make predictions on new test cases
-\item Deploy solution in your operational process
-\item Make things usable
-\end{itemize}
-}
-\only<4>{
-\begin{itemize}
-\item Improve your decisions
-\end{itemize}
-End-user.\\
-Job title depends on your professional field.
-}
-\only<5>{
-Need to automate as many steps as possible in this workflow\\
-\hspace{2cm}$\rightarrow$ data-driven approaches\\
-\hspace{2cm}$\rightarrow$ Machine Learning for step 2 (and 3)
-}
-\end{block}
-\end{overlayarea}
-\end{frame}
-
-\begin{frame}{A word on data quality}
-\begin{itemize}
-\item amount of data: data is often abundant but crucial data is often scarce
-\item noise, errors, missing data, outdated data: reliability
-\item high-dimensional data
-\item class imbalance
-\item heterogeneous data (scalars, booleans, time series, images, text, \ldots)
-\end{itemize}
-All these will influence your algorithmic design or choices.\\
-~\\
-So let's talk about algorithms to see how we can solve the problems listed earlier.
-\end{frame}
-
-\begin{frame}{Machine Learning}
-\centering
-Machines that learn?\\
-Let's try to give a general definition.\\
-~\\
-\visible<2>{Machine learning is a field of computer science that gives computer systems the ability to ``learn'' (i.e. progressively improve performance on a specific task) with data, without being explicitly programmed.
-\begin{flushright}
-{\footnotesize (\href{https://en.wikipedia.org/wiki/Machine_learning}{Wikipedia)}}
-\end{flushright}}
-\end{frame}
-
-\begin{frame}{ML examples}
-\begin{overlayarea}{\textwidth}{5cm}
-\begin{itemize}
-\item<1-> Given 20 years of clinical data, will this patient have a second heart attack in the next 5 years?
-\item<2-> What price for this stock, 6 months from now?
-\item<3-> Is this handwritten number a 7?
-\item<4-> Is this e-mail a spam?
-\item<5-> Can I cluster together customers? press articles? genes?
-\item<6-> What is the best strategy when playing Counter Strike? or poker?
-\end{itemize}
-\end{overlayarea}
-\begin{overlayarea}{\textwidth}{2.5cm}
-\begin{center}
-\only<1>{\includegraphics[height=2.5cm]{img/surgery.jpg}}
-\only<2>{\includegraphics[height=2.5cm]{img/finance.png}}
-\only<3>{\includegraphics[height=2.5cm]{img/seven.jpg}}
-\only<4>{\begin{tabular}{rl}
-\begin{minipage}{0.9cm}
-\includegraphics[height=1cm]{img/message.jpg}
-\end{minipage} & \textbf{Enlarge your thesis!}
-\end{tabular}}
-\only<5>{\includegraphics[height=2.5cm]{img/people.jpg}\includegraphics[height=2.5cm]{img/words.jpg}\includegraphics[height=2.5cm]{img/DNA_microarray.pdf}}
-\only<6>{\includegraphics[height=2.5cm]{img/counterstrike2.jpg}~~\includegraphics[height=2.5cm]{img/poker2.jpg}}
-\end{center}
-\end{overlayarea}
-\begin{overlayarea}{\textwidth}{1cm}
-\tiny Image sources: %
-\only<1>{\href{https://commons.wikimedia.org/wiki/File:Cardiac_surgery_operating_room.jpg}{Wikimedia commons}}%
-\only<2>{\href{https://commons.wikimedia.org/wiki/File:Crypto_Composite_home_page.png}{Wikimedia commons}}%
-\only<3>{\href{http://www.urbanthreads.com/productImages/regularSize/UTH4670.jpg}{[link]}}%
-\only<4>{\href{https://www.iconfinder.com/icons/118781/mail_message_new_icon}{Iconfinder}}%
-\only<5>{\href{http://clipart-library.com/white-people-cliparts.html}{People.jpg} / 
-\href{http://journals.sagepub.com/doi/pdf/10.1207/s15328023top1701_10}{Writing to Discuss: Use of a Clustering Technique} / 
-\href{https://commons.wikimedia.org/wiki/File:DNA_microarray.svg}{DNA microarray}}
-\only<6>{\href{https://en.wikipedia.org/wiki/File:Counter-Strike_Source_(box_art).jpg}{CS:source} / \href{https://commons.wikimedia.org/wiki/File:2006_WSOP_Main_Event_Table.jpg}{poker}}
-\end{overlayarea}
-\end{frame}
-
-\begin{frame}{ML tasks}
-What does ML do? 3 main tasks.\\
-~\\
-\begin{tabular}{|c|c|c|c|}
-\hline
-\makecell[{{p{0.07\textwidth}}}]{\textbf{Task}} &
-\makecell[{{p{0.27\textwidth}}}]{\centering Supervised\\ Learning} & \makecell[{{p{0.27\textwidth}}}]{\centering Unsupervised Learning} & \makecell[{{p{0.27\textwidth}}}]{\centering Reinforcement Learning}\\
-\hline
-\makecell[{{p{0.07\textwidth}}}]{\textbf{Goal}} &
-\makecell[{{p{0.27\textwidth}}}]{\centering Learn a function, $f(x)=y$} & \makecell[{{p{0.27\textwidth}}}]{\centering Find groups and correlations, $x\in C$} & \makecell[{{p{0.27\textwidth}}}]{\centering Optimal control, $f(x)=u \ / \ \max\sum r$}\\
-\hline
-\makecell[{{p{0.07\textwidth}}}]{\textbf{Data}} &
-\makecell[{{p{0.27\textwidth}}}]{\centering $\{(x,y)\}$} & \makecell[{{p{0.27\textwidth}}}]{\centering $\{x\}$} & \makecell[{{p{0.27\textwidth}}}]{\centering $\{(x,u,r,x')\}$}\\
-\hline
-\makecell[{{p{0.07\textwidth}}}]{\textbf{Sub-task}} &
-\makecell[{{p{0.27\textwidth}}}]{\centering Classification, Regression} & \makecell[{{p{0.27\textwidth}}}]{\centering Clustering, Density estimation, Dimensionnality reduction} & \makecell[{{p{0.27\textwidth}}}]{\centering Value estimation, Policy optimization}\\
-\hline
-\makecell[{{p{0.07\textwidth}}}]{\textbf{Algo ex.}} &
-\makecell[{{p{0.27\textwidth}}}]{\centering Neural Networks, SVM, Random Forests} & \makecell[{{p{0.27\textwidth}}}]{\centering k-means, PCA, HCA} & \makecell[{{p{0.27\textwidth}}}]{\centering Q-learning}\\
-\hline
-\end{tabular}
-\end{frame}
-
-\begin{frame}{Evaluation criteria}
-Evaluating ML methods? What do we really want?\\
-~\\
+\begin{frame}{Schedule (flexible)}
 \begin{tabular}{ll}
-\begin{minipage}{0.65\textwidth}
-Ability to fit the training data:
+\textbf{day 1} & \\
+09:00 - 10:00 & Introduction\\
+              & {\footnotesize Context and definitions}\\
+10:00 - 10:30 & The importance of pre-processing\\
+              & {\footnotesize A practical example on text data}\\
+10:45 - 12:15 & A geometrical approach to Machine Learning\\
+              & {\footnotesize An intro to support vector machines and a bit of kernel theory}\\
+12:15 - 13:30 & Lunch break\\
+13:30 - 17:30 & A probabilistic approach to Machine Learning\\
+              & {\footnotesize Bayesian modeling, naive Bayes blassifiers and Gaussian Processes}\\
+\hline
+\textbf{day 2}&\\
+09:00 - 12:15 & A connexionist perspective on Machine Learning\\
+              & {\footnotesize An introduction to Artificial Neural Networks and to Deep Learning}\\
+12:15 - 13:30 & Lunch break\\
+13:30 - 16:30 & Ensemble of explainable models\\
+              & {\footnotesize Decision trees, bagging and random forests}\\
+16:30 - 17:30 & Wrap-up and discussion
+\end{tabular}
+\end{frame}
+
+\begin{frame}{A word on the instructor}
+\begin{tabular}{lr}
+\begin{minipage}{.6\textwidth}
 \begin{itemize}
-\item Regression: Mean Square Error
-\item Classification: Accuracy, TP, FP, ROC, AUC\ldots\\
-cf. {\href{https://en.wikipedia.org/wiki/Precision_and_recall}{this Wikipedia article}}
-\item Clustering: similarity scores
-\end{itemize}
-~\\
-Ability to generalize:
-\begin{itemize}
-\item Goal: filter out noise, avoid overfitting, generalize to unseen cases.
-\item ML Notions:
-\begin{itemize}
-\item maximize margin
-\item minimize difference btw class distributions (cross-entropy)
-\end{itemize}
+	\item[\web] \url{https://erachelson.github.io/}
+	\item[\suitcase] Professor in ML/AI at ISAE-SUPAERO,\\
+	previously at various places.
+	\item[\graduate] Engineer, PhD, HDR
+	\item[\researcher] Reinforcement Learning, SuReLI team leader
+	\item[\class] Founder of Data Science curricula at ISAE-SUPAERO\\
+	MVA Lecturer (ENS Paris-Saclay)
 \end{itemize}
 \end{minipage} &
-\begin{minipage}{0.3\textwidth}
-\includegraphics[width=\textwidth]{img/Precisionrecall.png}\\
-\tiny Image source: \href{https://commons.wikimedia.org/wiki/File:Precisionrecall.svg}{Wikimedia commons}
+\begin{minipage}{.4\textwidth}
+	\hfill
+	\includegraphics[width=.5\textwidth]{img/emmanuel-rachelson.jpg}
 \end{minipage}
 \end{tabular}
 \end{frame}
 
-\begin{frame}{Misconceptions and clarifications}
-\begin{itemize}
-\item[AI] ML is only a small (currently fashionable) part of Artificial Intelligence.
-\item[BD] Big Data refers to working with datasets that have large Volume, Variety, Velocity (, Veracity, and Value).
-\item[DL] Deep Learning is Machine Learning with Deep Neural Networks.
-\item[threat] [Provocative thought] ML / Data Science / Big Data are as much of a threat (to jobs, the society, the economy\ldots) as the combustion engine was in the XIXth century.
-\item[ethics] Technical problems are not just technical problems and solutions \emph{always} imply some tradeoff. Who bears the (moral) responsibility?
-\end{itemize}
+\begin{frame}{ML and you}
 \begin{center}
-	\includegraphics[width=5cm]{img/datascientist.png}
+\vfill
+Your ML keywords
 \end{center}
+\vspace{3em}
+Problems and examples you want to use ML for.\\
+Keywords associated to ML.\\
+Let's list all that on the white board.
 \end{frame}
 
-\begin{frame}{ML software}
+\begin{frame}{Buzz-words and definitions}
+	\begin{itemize}
+		\item[AI] ML is only a small (currently fashionable) part of Artificial Intelligence.
+		\item[BD] Big Data refers to working with datasets that have large Volume, Variety, Velocity (, Veracity, and Value).
+		\item[ML] Field of computer science that gives computer systems the ability to ``learn'' (i.e. progressively improve performance on a specific task) with data, without being explicitly programmed.
+		\item[DL] Deep Learning is Machine Learning with Deep Neural Networks.
+		\item[GenAI] ML task of generating convincing content.
+		\item[threat] [Provocative thought] ML / Data Science / Big Data are as much of a threat (to jobs, the society, the economy\ldots) as the combustion engine was in the XIXth century.
+		\item[ethics] Technical problems are not just technical problems and solutions \emph{always} imply some tradeoff. Who bears the (moral) responsibility?
+	\end{itemize}
+	\begin{center}
+		\includegraphics[width=5cm]{img/datascientist.png}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Machine Learning}
+	\centering
+	\vfill
+	Machines that learn?\\
+	Let's try to give a general definition.\\
+	~\\Machine learning is a field of computer science that gives computer systems the ability to ``learn'' (i.e. progressively improve performance on a specific task) with data, without being explicitly programmed.
+		\begin{flushright}
+			{\footnotesize (\href{https://en.wikipedia.org/wiki/Machine_learning}{Wikipedia)}}
+		\end{flushright}
+	~\\
+	Task? Performance? Data?\\
+	We'll clarify this through examples.
+\end{frame}
+
+\begin{frame}{Applicative examples}
+\begin{itemize}
+		\item Predictive maintenance%(RUL/TTF prediction, proba of failure, anomaly detection)
+		\item Market segmentation%(grouping customer habits)
+		\item Demand forecast
+		\item Preliminary design studies
+		\item Clinical diagnosis
+		\item Documentation management
+		\item Satellite imaging
+		\item \ldots
+\end{itemize}
+\end{frame}
+
+\begin{frame}{From field tasks, to data, to ML}
+	Let's take the example of Predictive Maintenance.\\
+	~\\
+	We would like to build automated tools for the following tasks:
+	\begin{itemize}
+		\item Visualize system state
+		\item Identify anomalies
+		\item Predict Remaining Useful Life (RUL) / Time To Failure (TTF)
+		\item Predict failure occurrence or probability at a given horizon
+	\end{itemize}
+	All this, in order to base our maintenance strategy on the (inferred) system state, rather than a general statistical trend.\\
+	~\\
+	\begin{block}{}
+		Can you relate this task decomposition to the other use-cases?
+	\end{block}
+	
+	\begin{minipage}{.5\textwidth}
+		Traditionally, all this is based on user expertise.\\
+		Let's take a data-driven approach.
+	\end{minipage}
+	\begin{minipage}{.45\textwidth}
+		\hfill \includegraphics[width=3cm]{img/How-can-i-help.jpg}
+	\end{minipage}
+\end{frame}
+
+\begin{frame}{Data analysis workflow}
+	\begin{enumerate}
+		\item<1-> Collect
+		\item<2-> Analyze
+		\item<3-> Predict
+		\item<4-> Decide
+	\end{enumerate}
+	\begin{overlayarea}{10cm}{4cm}
+		\begin{block}{}
+			\only<1>{
+				\begin{itemize}
+					\item Sensors deployment
+					\item Historical data collection
+					\item Integrated storage (datawarehouses) and retrieval issues
+				\end{itemize}
+				$\rightarrow$ Extract-Transform-Load (ETL) process\\
+				More on ETL: \href{https://www.sas.com/en_us/insights/data-management/what-is-etl.html}{[link]}.\\
+				The \emph{data engineer}'s job: data quality, management, availability.
+			}
+			\only<2>{
+				\begin{itemize}
+					\item data cleaning
+					\item feature selection / engineering
+					\item performance criteria
+					\item algorithm selection
+					\item parameters tuning
+				\end{itemize}
+				The \emph{data analyst} or \emph{data scientist}'s job.\\
+				But can't be disconnected from field engineers on the task.
+			}
+			\only<3>{
+				\begin{itemize}
+					\item Make predictions on new test cases
+					\item Deploy solution in your operational process
+					\item Make things usable
+				\end{itemize}
+			}
+			\only<4>{
+				\begin{itemize}
+					\item Improve your decisions
+				\end{itemize}
+				End-user.\\
+				Job title depends on your professional field.
+			}
+			\only<5>{
+				Need to automate as many steps as possible in this workflow\\
+				\hspace{2cm}$\rightarrow$ data-driven approaches\\
+				\hspace{2cm}$\rightarrow$ Machine Learning for step 2 (and 3)
+			}
+		\end{block}
+	\end{overlayarea}
+\end{frame}
+
+\begin{frame}{A word on data quality}
+	\begin{itemize}
+		\item amount of data: data is often abundant but crucial data is often scarce
+		\item noise, errors, missing data, outdated data: reliability
+		\item high-dimensional data
+		\item class imbalance
+		\item heterogeneous data (scalars, booleans, time series, images, text, \ldots)
+	\end{itemize}
+	All these will influence your algorithmic design or choices.\\
+	~\\
+	So let's talk about algorithms to see how we can solve the problems listed earlier.
+\end{frame}
+
+\begin{frame}{Machine Learning}
+	\centering
+	\vfill
+	Recall the general definition of ML:\\
+	~\\Machine learning is a field of computer science that gives computer systems the ability to ``learn'' (i.e. progressively improve performance on a specific task) with data, without being explicitly programmed.
+	\begin{flushright}
+		{\footnotesize (\href{https://en.wikipedia.org/wiki/Machine_learning}{Wikipedia)}}
+	\end{flushright}
+	~\\
+	We have clarified \emph{data}.
+	What about \emph{task} and \emph{performance}?
+\end{frame}
+
+\begin{frame}{ML examples}
+	\begin{overlayarea}{\textwidth}{5cm}
+		Given the available \emph{data}$\ldots$
+		\begin{itemize}
+			\item<1-> Will this patient have a second heart attack in the next 5 years?
+			\item<2-> What price for this stock, 6 months from now?
+			\item<3-> Is this handwritten number a 7?
+			\item<4-> Is this e-mail a spam?
+			\item<5-> Can I cluster together customers? press articles? genes?
+			\item<6-> What is the best strategy when playing Counter Strike? or poker?
+		\end{itemize}
+	\end{overlayarea}
+	\begin{overlayarea}{\textwidth}{2.5cm}
+		\begin{center}
+			\only<1>{\includegraphics[height=2.5cm]{img/surgery.jpg}}
+			\only<2>{\includegraphics[height=2.5cm]{img/finance.png}}
+			\only<3>{\includegraphics[height=2.5cm]{img/seven.jpg}}
+			\only<4>{\begin{tabular}{rl}
+					\begin{minipage}{0.9cm}
+						\includegraphics[height=1cm]{img/message.jpg}
+					\end{minipage} & \textbf{Enlarge your thesis!}
+			\end{tabular}}
+			\only<5>{\includegraphics[height=2.5cm]{img/people.jpg}\includegraphics[height=2.5cm]{img/words.jpg}\includegraphics[height=2.5cm]{img/DNA_microarray.pdf}}
+			\only<6>{\includegraphics[height=2.5cm]{img/counterstrike2.jpg}~~\includegraphics[height=2.5cm]{img/poker2.jpg}}
+		\end{center}
+	\end{overlayarea}
+	\begin{overlayarea}{\textwidth}{1cm}
+		\tiny Image sources: %
+		\only<1>{\href{https://commons.wikimedia.org/wiki/File:Cardiac_surgery_operating_room.jpg}{Wikimedia commons}}%
+		\only<2>{\href{https://commons.wikimedia.org/wiki/File:Crypto_Composite_home_page.png}{Wikimedia commons}}%
+		\only<3>{\href{http://www.urbanthreads.com/productImages/regularSize/UTH4670.jpg}{[link]}}%
+		\only<4>{\href{https://www.iconfinder.com/icons/118781/mail_message_new_icon}{Iconfinder}}%
+		\only<5>{\href{http://clipart-library.com/white-people-cliparts.html}{People.jpg} / 
+			\href{http://journals.sagepub.com/doi/pdf/10.1207/s15328023top1701_10}{Writing to Discuss: Use of a Clustering Technique} / 
+			\href{https://commons.wikimedia.org/wiki/File:DNA_microarray.svg}{DNA microarray}}
+		\only<6>{\href{https://en.wikipedia.org/wiki/File:Counter-Strike_Source_(box_art).jpg}{CS:source} / \href{https://commons.wikimedia.org/wiki/File:2006_WSOP_Main_Event_Table.jpg}{poker}}
+	\end{overlayarea}
+\end{frame}
+
+\begin{frame}{ML tasks}
+	What does ML do? 3 main tasks.\\
+	~\\
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		\makecell[{{p{0.07\textwidth}}}]{\textbf{Task}} &
+		\makecell[{{p{0.27\textwidth}}}]{\centering Supervised\\ Learning} & \makecell[{{p{0.27\textwidth}}}]{\centering Unsupervised Learning} & \makecell[{{p{0.27\textwidth}}}]{\centering Reinforcement Learning}\\
+		\hline
+		\makecell[{{p{0.07\textwidth}}}]{\textbf{Goal}} &
+		\makecell[{{p{0.27\textwidth}}}]{\centering Learn a function, $f(x)=y$} & \makecell[{{p{0.27\textwidth}}}]{\centering Find groups and correlations, $x\in C$} & \makecell[{{p{0.27\textwidth}}}]{\centering Optimal control, $f(x)=u \ / \ \max\sum r$}\\
+		\hline
+		\makecell[{{p{0.07\textwidth}}}]{\textbf{Data}} &
+		\makecell[{{p{0.27\textwidth}}}]{\centering $\{(x,y)\}$} & \makecell[{{p{0.27\textwidth}}}]{\centering $\{x\}$} & \makecell[{{p{0.27\textwidth}}}]{\centering $\{(x,u,r,x')\}$}\\
+		\hline
+		\makecell[{{p{0.07\textwidth}}}]{\textbf{Sub-task}} &
+		\makecell[{{p{0.27\textwidth}}}]{\centering Classification, Regression} & \makecell[{{p{0.27\textwidth}}}]{\centering Clustering, Density estimation, Dimensionnality reduction} & \makecell[{{p{0.27\textwidth}}}]{\centering Value estimation, Policy optimization}\\
+		\hline
+		\makecell[{{p{0.07\textwidth}}}]{\textbf{Algo ex.}} &
+		\makecell[{{p{0.27\textwidth}}}]{\centering Neural Networks, SVM, Random Forests} & \makecell[{{p{0.27\textwidth}}}]{\centering k-means, PCA, HCA} & \makecell[{{p{0.27\textwidth}}}]{\centering Q-learning}\\
+		\hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}{Evaluation criteria}
+	Evaluating ML methods? What do we really want?\\
+	~\\
+	\begin{tabular}{ll}
+		\begin{minipage}{0.65\textwidth}
+			Ability to fit the training data:
+			\begin{itemize}
+				\item Regression: Mean Square Error
+				\item Classification: Accuracy, TP, FP, ROC, AUC\ldots\\
+				cf. {\href{https://en.wikipedia.org/wiki/Precision_and_recall}{this Wikipedia article}}
+				\item Clustering: similarity scores
+			\end{itemize}
+			~\\
+			Ability to generalize:
+			\begin{itemize}
+				\item Goal: filter out noise, avoid overfitting, generalize to unseen cases.
+				\item ML Notions:
+				\begin{itemize}
+					\item maximize margin
+					\item minimize difference btw class distributions (cross-entropy)
+				\end{itemize}
+			\end{itemize}
+		\end{minipage} &
+		\begin{minipage}{0.3\textwidth}
+			\includegraphics[width=\textwidth]{img/Precisionrecall.png}\\
+			\tiny Image source: \href{https://commons.wikimedia.org/wiki/File:Precisionrecall.svg}{Wikimedia commons}
+		\end{minipage}
+	\end{tabular}
+\end{frame}
+
+\begin{frame}{Empirical risk minimization}
+	\begin{center}
+	A generic framework: empirical risk minimization.\\
+	\vspace{2em}
+	\begin{tabular}{ll}
+		Task, data distribution & $x,y \sim p(x,y)$\\
+		Cost of error, \emph{loss} function & $\ell(f(x),y)$\\
+		Performance for the task, \emph{Risk} & $R(f) = \mathbb{E}_{x,y \sim p}[\ell(f(x),y)]$
+	\end{tabular}\\
+	\vspace{2em}
+	Ideal solution to ML problem:\\
+	$\min_f R(f)$\\
+	\vspace{2em}
+	But only finite amount of data!\\
+	\emph{Empirical risk:} $\bar{R}(f)\frac{1}{N} \sum_i \ell(f(x_i),y_i)$\\
+	\emph{Empirical risk minimization}: $f^* = \arg\min_f \bar{R}(f)$\\
+	\vspace{2em}
+	Generalization gap: $|R(f^*)-\bar{R}(f)|$
+	\end{center}
+\end{frame}
+
+\begin{frame}{Short break}
+	\vfill
+	Now that we have cleared up the fog, let's take a look at these buzz-words again.
+\end{frame}
+
+\begin{frame}{Buzz-words and definitions}
+	\begin{itemize}
+		\item[AI] ML is only a small (currently fashionable) part of Artificial Intelligence.
+		\item[BD] Big Data refers to working with datasets that have large Volume, Variety, Velocity (, Veracity, and Value).
+		\item[ML] Field of computer science that gives computer systems the ability to ``learn'' (i.e. progressively improve performance on a specific task) with data, without being explicitly programmed.
+		\item[DL] Deep Learning is Machine Learning with Deep Neural Networks.
+		\item[GenAI] ML task of generating convincing content.
+		\item[threat] [Provocative thought] ML / Data Science / Big Data are as much of a threat (to jobs, the society, the economy\ldots) as the combustion engine was in the XIXth century.
+		\item[ethics] Technical problems are not just technical problems and solutions \emph{always} imply some tradeoff. Who bears the (moral) responsibility?
+	\end{itemize}
+	\begin{center}
+		\includegraphics[width=5cm]{img/datascientist.png}
+	\end{center}
+\end{frame}
+
+\begin{frame}{The analysis pipeline}
+	\vfill
+	\begin{minipage}{.55\textwidth}
+		Recall the data analysis workflow?\\
+		ML algorithms are only a small (crucial) part of the analysis and decision pipeline!\\
+		
+		\vspace{10em}
+		{\scriptsize From \textbf{Supervised Machine Learning: A Review of Classification Techniques}, S. B. Kotsiantis, \textit{Informatica}, 31:249--268, 2007.}
+	\end{minipage} 
+	\begin{minipage}{.4\textwidth}
+		\includegraphics[width=\textwidth]{img/process.png}
+	\end{minipage}
+\end{frame}
+
+\begin{frame}{Relating field tasks and ML tasks}
+	\small
+	\visible<1->{
+		Back to the example of Predictive Maintenance tasks.
+		\begin{itemize}
+			\item Visualizing system state\\
+			\hspace{1cm} $\rightarrow$ Dimensionnality reduction (Unsupervised learning)
+			\item Detecting anomalies\\
+			\hspace{1cm} $\rightarrow$ Density estimation (Unsupervised learning)
+			\item Predicting RUL or TTF\\
+			\hspace{1cm} $\rightarrow$ Regression (Supervised learning)
+			\item Predicting failure in $N$ cycles\\
+			\hspace{1cm} $\rightarrow$ Classification (Supervised learning)
+		\end{itemize}
+	}
+	\visible<2->{
+		%~\\
+		\underline{Thinking like a Maintenance Engineer:}\\
+		How can I monitor my system to manage my maintenance operations?\\
+		\underline{Thinking like a Data Scientist:}\\
+		Is this a supervised or an unsupervised problem? What available data?\\
+		%~\\
+		\begin{block}{}
+			Relate this example to your own field.\\
+			Now you can start discussing with data scientists to design together the most appropriate method for your data and your problem.
+		\end{block}
+	}
+\end{frame}
+
+\begin{frame}{A word on ML software and the ML ecosystem}
 Software:
 \begin{itemize}
-\item Many free software libraries: scikit-learn, tensorflow, pytorch\ldots check \url{www.mloss.org} if you're curious.
+\item Many free software libraries: scikit-learn, tensorflow, pytorch\ldots \\ check \url{www.mloss.org}!
 \item Free environments: Weka, RStudio\ldots
 \item Commercial embedded solutions (more or less specialized): Matlab, IBM, Microsoft\ldots
 \end{itemize}
 \vspace{2em}
-Short ``time to market'' and high innovation pace.
+Short ``time to market'', high innovation pace, open knowledge practices.\\
+Value is in 1) the data, 2) the advanced expertise, 3) the implementation tricks.\\
+But \emph{not} in the IP.
 \end{frame}
 
-\begin{frame}{The process of (Un)Supervised Learning}
-\begin{center}
-\includegraphics[height=7cm]{img/process.png}
-\end{center}
-\vspace{-0.5cm}
-{\footnotesize From \textbf{Supervised Machine Learning: A Review of Classification Techniques}, S. B. Kotsiantis, \textit{Informatica}, 31:249--268, 2007.}
-\end{frame}
 
-\begin{frame}{Relating your needs and ML}
-\small
-\visible<1->{
-Back to the example of Predictive Maintenance tasks.
-\begin{itemize}
-\item Visualizing system state\\
-\hspace{1cm} $\rightarrow$ Dimensionnality reduction (Unsupervised learning)
-\item Detecting anomalies\\
-\hspace{1cm} $\rightarrow$ Density estimation (Unsupervised learning)
-\item Predicting RUL or TTF\\
-\hspace{1cm} $\rightarrow$ Regression (Supervised learning)
-\item Predicting failure in $N$ cycles\\
-\hspace{1cm} $\rightarrow$ Classification (Supervised learning)
-\end{itemize}
-}
-\visible<2->{
-%~\\
-\underline{Thinking like a Maintenance Engineer:}\\
-How can I monitor my system to manage my maintenance operations?\\
-\underline{Thinking like a Data Scientist:}\\
-Is this a supervised or an unsupervised problem? What available data?\\
-%~\\
-\begin{block}{}
-Relate this example to your own field.\\
-Now you can start discussing with data scientists to design together the most appropriate method for your data and your problem.
-\end{block}
-}
-\end{frame}
-
-\begin{frame}{A word on scikit-learn}
-Scikit-learn = Machine Learning in Python
+\begin{frame}{A word on libraries}
+Scikit-learn = general purpose Machine Learning in Python
 \begin{itemize}
 \item Simple and efficient tools for data mining and data analysis
 \item Accessible to everybody, and reusable in various contexts
@@ -417,331 +516,335 @@ Scikit-learn = Machine Learning in Python
 \end{itemize}
 \url{http://scikit-learn.org}\\
 ~\\
-Let's take a look at the \href{http://scikit-learn.org/stable/user_guide.html}{documentation's table of contents} to grasp a few more keywords.
+Let's take a look at the \href{http://scikit-learn.org/stable/user_guide.html}{documentation's table of contents} to grasp a few more keywords.\\
+~\\
+~\\
+We will also look at PyTorch (deep neural networks) later in the course.\\
+\url{https://pytorch.org/}
 \end{frame}
 
-\begin{frame}{Course goals}
-\small
-By the end of the class, you should be able to:
+\begin{frame}{Contents}
+\begin{tabular}{@{}ll}
+	What this class is about: & key concepts in Machine Learning (ML)\\
+	What it is not about: & AI in general,\\
+	& data storage and manipulation, big or small data,\\
+	& data storytelling,\\
+	& specific applications of ML, etc.
+\end{tabular}\\
+I'm happy to discuss these along the class and during the breaks, but they are beyond our focus.
+
+\vspace{2em}
+\indent What this class is useful for:
 \begin{itemize}
-\item implement a generic workflow of data analysis for your application field;
-\item know the main bottlenecks and challenges of data-driven approaches;
-\item link some field problems to their formal Machine Learning counterparts;
-\item know the main categories of Machine Learning algorithms and which formal problem they solve;
-\item know the name and principles of some key methods in Machine Learning:
+	\item[] Evaluate statements/projects/proposals about ML or using ML
+	\item[] Lay the ground for deeper exploration of technical ML topics
+\end{itemize}
+
+\vspace{2em}
+Steps towards this goal:
 \begin{itemize}
-\item SVM,
-\item kernel methods,
-\item Naive Bayes Classification,
-\item Gaussian Processes,
-\item Artificial Neural Networks,
-\item Deep Learning,
-\item Random Forests;
-\end{itemize} 
-\item know the existence of scikit-learn and its API.
+	\item Defining vocabulary, debunking misconceptions, naming tasks and problems
+	\item Situating ML within data analysis
+	\item Diving into the technicalities of 4 different perspectives on ML
+	\begin{itemize}
+		\item A geometrical perspective (support vector machines and more)
+		\item A probabilistic perspective (Bayesian modeling methods)
+		\item A connexionist perspective (neural networks and deep learning)
+		\item An ensemblist perspective (incl. random forests)
+	\end{itemize}
 \end{itemize}
 \end{frame}
 
 \begin{frame}{What you should expect in the remainder of this class}
 \begin{itemize}
-\item As many intuitive notions as possible,
-\item \ldots but also quite a bit of (hopefully painless) math,\\
-\item \ldots and a fair amount of hands-on manipulations and demos.
+	\item As many intuitive notions as possible,
+	\item \ldots but also quite a bit of (hopefully painless) math,\\
+	\item \ldots and a fair amount of hands-on manipulations and demos.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Schedule}
-\begin{enumerate}
-\item General introduction and motivation \Checkmark \\
-{\small \it How does ML fit within your business process.\\
-Why you should take time to understand what's under the hood in ML.}
-\item The importance of data pre-processing\\
-{\small \it A practical illustration.}
-\item A geometrical approach to ML\\
-{\small \it Support Vector Machines and a bit of kernel theory.}
-\item A probabilistic approach to ML\\
-{\small \it Naive Bayes Classification and Gaussian Processes.}
-\item A connectionist perspective \\
-{\small \it From mimicking the human brain to Artificial Neural Networks.\\
-Deep Learning.}
-\item Ensembles of explainable models\\
-{\small \it Decision Trees, Bagging and Random Forests.}
-\item Practical session, discussion and conclusion
-\end{enumerate}
+\begin{frame}{Schedule (flexible)}
+	\begin{tabular}{ll}
+		\textbf{day 1} & \\
+		09:00 - 10:00 & Introduction\\
+		& {\footnotesize Context and definitions}\\
+		10:00 - 10:30 & The importance of pre-processing\\
+		& {\footnotesize A practical example on text data}\\
+		10:45 - 12:15 & A geometrical approach to Machine Learning\\
+		& {\footnotesize An intro to support vector machines and a bit of kernel theory}\\
+		12:15 - 13:30 & Lunch break\\
+		13:30 - 17:30 & A probabilistic approach to Machine Learning\\
+		& {\footnotesize Bayesian modeling, naive Bayes blassifiers and Gaussian Processes}\\
+		\hline
+		\textbf{day 2}&\\
+		09:00 - 12:15 & A connexionist perspective on Machine Learning\\
+		& {\footnotesize An introduction to Artificial Neural Networks and to Deep Learning}\\
+		12:15 - 13:30 & Lunch break\\
+		13:30 - 16:30 & Ensemble of explainable models\\
+		& {\footnotesize Decision trees, bagging and random forests}\\
+		16:30 - 17:30 & Wrap-up and discussion
+	\end{tabular}
 \end{frame}
 
 \begin{frame}{The importance of data pre-processing}
 Images, text, video, sound, measurement time series, continuous or discrete variables, missing data...
 \begin{itemize}
-\item[$\rightarrow$] filtering out noise and irrelevant data.\\%
-{\small \it scaling, filtering, reducing...}
-\item[$\rightarrow$] data- and application-specific procedures.\\%
-{\small \it domain knowledge leverages non-representative datasets.}
-\item[$\rightarrow$] source of potential harm.\\%
-{\small \it keep goals in mind, to make informed tradeoffs that might induce bias.}
+	\item[$\rightarrow$] filtering out noise and irrelevant data.\\%
+	{\small \it scaling, filtering, reducing...}
+	\item[$\rightarrow$] data- and application-specific procedures.\\%
+	{\small \it domain knowledge leverages non-representative datasets.}
+	\item[$\rightarrow$] source of potential harm.\\%
+	{\small \it keep goals in mind, to make informed tradeoffs that might induce bias.}
 \end{itemize}
 $\Rightarrow$ Crucial elements for a good start.
 \begin{center}
-Never neglect the pre-processing.
+	Never neglect the pre-processing.
 \end{center}
 \end{frame}
 
-\begin{frame}{Schedule}
-\begin{enumerate}
-\item General introduction and motivation \Checkmark \\
-{\small \it How does ML fit within your business process.\\
-Why you should take time to understand what's under the hood in ML.}
-\item The importance of data pre-processing \Checkmark \\
-{\small \it A practical illustration.}
-\item A geometrical approach to ML\\
-{\small \it Support Vector Machines and a bit of kernel theory.}
-\item A probabilistic approach to ML\\
-{\small \it Naive Bayes Classification and Gaussian Processes.}
-\item A connectionist perspective \\
-{\small \it From mimicking the human brain to Artificial Neural Networks.\\
-Deep Learning.}
-\item Ensembles of explainable models\\
-{\small \it Decision Trees, Bagging and Random Forests.}
-\item Practical session, discussion and conclusion
-\end{enumerate}
+\begin{frame}{Schedule (flexible)}
+\begin{tabular}{ll}
+	\textbf{day 1} & \\
+	09:00 - 10:00 & Introduction\\
+	& {\footnotesize Context and definitions}\\
+	10:00 - 10:30 & The importance of pre-processing\\
+	& {\footnotesize A practical example on text data}\\
+	10:45 - 12:15 & A geometrical approach to Machine Learning\\
+	& {\footnotesize An intro to support vector machines and a bit of kernel theory}\\
+	12:15 - 13:30 & Lunch break\\
+	13:30 - 17:30 & A probabilistic approach to Machine Learning\\
+	& {\footnotesize Bayesian modeling, naive Bayes blassifiers and Gaussian Processes}\\
+	\hline
+	\textbf{day 2}&\\
+	09:00 - 12:15 & A connexionist perspective on Machine Learning\\
+	& {\footnotesize An introduction to Artificial Neural Networks and to Deep Learning}\\
+	12:15 - 13:30 & Lunch break\\
+	13:30 - 16:30 & Ensemble of explainable models\\
+	& {\footnotesize Decision trees, bagging and random forests}\\
+	16:30 - 17:30 & Wrap-up and discussion
+\end{tabular}
 \end{frame}
 
 \begin{frame}{A geometrical approach to ML}
 \begin{block}{}
-\begin{enumerate}
-\item Draw a line that sits as far as possible from the data points $\rightarrow$ Support Vector Machines
-\item Send all data points in a higher dimension space where they are linearly separable $\rightarrow$ kernel trick
-\end{enumerate}
-$\Rightarrow$ SVM + kernel trick = Find the optimal separating hyperplane in this higher dimension space, without ever computing the mapping.
+	\begin{enumerate}
+		\item Draw a line that sits as far as possible from the data points $\rightarrow$ Support Vector Machines
+		\item Send all data points in a higher dimension space where they are linearly separable $\rightarrow$ kernel trick
+	\end{enumerate}
+	$\Rightarrow$ SVM + kernel trick = Find the optimal separating hyperplane in this higher dimension space, without ever computing the mapping.
 \end{block}
-
 \begin{itemize}
-\item SVM try to separate data by maximizing a geometrical margin
-\item They are computed offline
-\item They offer a sparse, robust to class imbalance, and easy to evaluate predictor
-\item Kernels are a way of enriching (lifting) the data representation so that it becomes linearly separable
-\item SVMs + kernels offer a versatile method for classification, regression and density estimation
-\item \href{http://scikit-learn.org/stable/modules/svm.html}{Link to documentation in scikit-learn}
+	\item SVM try to separate data by maximizing a geometrical margin
+	\item They are computed offline
+	\item They offer a sparse, robust to class imbalance, and easy to evaluate predictor
+	\item Kernels are a way of enriching (lifting) the data representation so that it becomes linearly separable
+	\item SVMs + kernels offer a versatile method for classification, regression and density estimation
+	\item \href{http://scikit-learn.org/stable/modules/svm.html}{Link to documentation in scikit-learn}
 \end{itemize}
-
 \end{frame}
 
-\begin{frame}{Schedule}
-\begin{enumerate}
-\item General introduction and motivation \Checkmark \\
-{\small \it How does ML fit within your business process.\\
-Why you should take time to understand what's under the hood in ML.}
-\item The importance of data pre-processing \Checkmark \\
-{\small \it A practical illustration.}
-\item A geometrical approach to ML \Checkmark \\
-{\small \it Support Vector Machines and a bit of kernel theory.}
-\item A probabilistic approach to ML\\
-{\small \it Naive Bayes Classification and Gaussian Processes.}
-\item A connectionist perspective \\
-{\small \it From mimicking the human brain to Artificial Neural Networks.\\
-Deep Learning.}
-\item Ensembles of explainable models\\
-{\small \it Decision Trees, Bagging and Random Forests.}
-\item Practical session, discussion and conclusion
-\end{enumerate}
+\begin{frame}{Schedule (flexible)}
+\begin{tabular}{ll}
+	\textbf{day 1} & \\
+	09:00 - 10:00 & Introduction\\
+	& {\footnotesize Context and definitions}\\
+	10:00 - 10:30 & The importance of pre-processing\\
+	& {\footnotesize A practical example on text data}\\
+	10:45 - 12:15 & A geometrical approach to Machine Learning\\
+	& {\footnotesize An intro to support vector machines and a bit of kernel theory}\\
+	12:15 - 13:30 & Lunch break\\
+	13:30 - 17:30 & A probabilistic approach to Machine Learning\\
+	& {\footnotesize Bayesian modeling, naive Bayes blassifiers and Gaussian Processes}\\
+	\hline
+	\textbf{day 2}&\\
+	09:00 - 12:15 & A connexionist perspective on Machine Learning\\
+	& {\footnotesize An introduction to Artificial Neural Networks and to Deep Learning}\\
+	12:15 - 13:30 & Lunch break\\
+	13:30 - 16:30 & Ensemble of explainable models\\
+	& {\footnotesize Decision trees, bagging and random forests}\\
+	16:30 - 17:30 & Wrap-up and discussion
+\end{tabular}
 \end{frame}
 
 \begin{frame}{A probabilistic approach to ML}
-\begin{block}{}
-Bayesian approach: find $y$ that maximizes $\mathbb{P}(Y=y|\textrm{data}, X=x)$
-\end{block}
-This problem of Bayesian inference is hard to solve without additional hypothesis.
+	\begin{block}{}
+		Bayesian approach: find $y$ that maximizes $\mathbb{P}(Y=y|\textrm{data}, X=x)$
+	\end{block}
+	This problem of Bayesian inference is hard to solve without additional hypothesis.
 \end{frame}
 
 \begin{frame}{A probabilistic approach to ML}
-\begin{block}{Naive Bayes classifiers}
-\begin{itemize}
-\item Make a naive, counter-intuitive hypothesis of conditional independence of the feature variables;
-\item Compute each class' probability for a new example using this hypothesis and picks the most probable one;
-\item Are a simple, scalable, online method;
-\item Despite their simplicity, perform surprisingly well and are competitive in many applications.
-\end{itemize}
-\end{block}
-
+	\begin{block}{Naive Bayes classifiers}
+		\begin{itemize}
+			\item Make a naive, counter-intuitive hypothesis of conditional independence of the feature variables;
+			\item Compute each class' probability for a new example using this hypothesis and picks the most probable one;
+			\item Are a simple, scalable, online method;
+			\item Despite their simplicity, perform surprisingly well and are competitive in many applications.
+		\end{itemize}
+	\end{block}
+	
 \end{frame}
 
 \begin{frame}{A probabilistic approach to ML}
-\only<1>{
-\begin{block}{Gaussian Processes}
-\begin{itemize}
-\item Compute the most probable function that passes through the data points, given a priori information about how related two data points are (through a covariance kernel);
-\item Also provide a measure of prediction uncertainty in each point;
-\item Are computed offline and require an $N\times N$ matrix inversion for $N$ data points in the training set (computationnally costly);
-\item Careful engineering of covariance kernels can help incorporate priori knowledge into Gaussian Processes;
-\item Are suitable both for regression and classification.
-\end{itemize}
-\end{block}
-}
-\only<2>{Note that Gaussian Processes are widely used in preliminary design phases, especially as surrogate models that replace physics computations.
-
-\begin{center}
-\includegraphics[width=5cm]{img/gaussianprocesses.png}
-\end{center}}
+	\only<1>{
+		\begin{block}{Gaussian Processes}
+			\begin{itemize}
+				\item Compute the most probable function that passes through the data points, given a priori information about how related two data points are (through a covariance kernel);
+				\item Also provide a measure of prediction uncertainty in each point;
+				\item Are computed offline and require an $N\times N$ matrix inversion for $N$ data points in the training set (computationnally costly);
+				\item Careful engineering of covariance kernels can help incorporate priori knowledge into Gaussian Processes;
+				\item Are suitable both for regression and classification.
+			\end{itemize}
+		\end{block}
+	}
+	\only<2>{Note that Gaussian Processes are widely used in preliminary design phases, especially as surrogate models that replace physics computations.
+		
+		\begin{center}
+			\includegraphics[width=5cm]{img/gaussianprocesses.png}
+	\end{center}}
 \end{frame}
 
-\begin{frame}{Schedule}
-\begin{enumerate}
-\item General introduction and motivation \Checkmark \\
-{\small \it How does ML fit within your business process.\\
-Why you should take time to understand what's under the hood in ML.}
-\item The importance of data pre-processing \Checkmark \\
-{\small \it A practical illustration.}
-\item A geometrical approach to ML \Checkmark \\
-{\small \it Support Vector Machines and a bit of kernel theory.}
-\item A probabilistic approach to ML \Checkmark \\
-{\small \it Naive Bayes Classification and Gaussian Processes.}
-\item A connectionist perspective \\
-{\small \it From mimicking the human brain to Artificial Neural Networks.\\
-Deep Learning.}
-\item Ensembles of explainable models\\
-{\small \it Decision Trees, Bagging and Random Forests.}
-\item Practical session, discussion and conclusion
-\end{enumerate}
+\begin{frame}{Schedule (flexible)}
+\begin{tabular}{ll}
+	\textbf{day 1} & \\
+	09:00 - 10:00 & Introduction\\
+	& {\footnotesize Context and definitions}\\
+	10:00 - 10:30 & The importance of pre-processing\\
+	& {\footnotesize A practical example on text data}\\
+	10:45 - 12:15 & A geometrical approach to Machine Learning\\
+	& {\footnotesize An intro to support vector machines and a bit of kernel theory}\\
+	12:15 - 13:30 & Lunch break\\
+	13:30 - 17:30 & A probabilistic approach to Machine Learning\\
+	& {\footnotesize Bayesian modeling, naive Bayes blassifiers and Gaussian Processes}\\
+	\hline
+	\textbf{day 2}&\\
+	09:00 - 12:15 & A connexionist perspective on Machine Learning\\
+	& {\footnotesize An introduction to Artificial Neural Networks and to Deep Learning}\\
+	12:15 - 13:30 & Lunch break\\
+	13:30 - 16:30 & Ensemble of explainable models\\
+	& {\footnotesize Decision trees, bagging and random forests}\\
+	16:30 - 17:30 & Wrap-up and discussion
+\end{tabular}
 \end{frame}
 
 \begin{frame}{Artificial Neural Networks}
 Keywords:
 \begin{itemize}
-\item Computation graph $f_\theta(x)$
-\item Forward pass and gradient backpropagation
-\item Online training
-\item Minibatches
-\item The vanishing gradient problem
-\item Keras, Tensorflow, Caffe, Pytorch, Theano
-\item Avoiding overfitting: dropout, regularization, data augmentation
-\item Convolutional neural networks
+	\item Computation graph $f_\theta(x)$
+	\item Forward pass and gradient backpropagation
+	\item Online training
+	\item Minibatches
+	\item The vanishing gradient problem
+	\item Tensorflow, Pytorch
+	\item Avoiding overfitting: dropout, regularization, data augmentation
+	\item Convolutional neural networks
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Artificial Neural Networks}
 \begin{itemize}
-\item Versatile, online training
-\item State-of-the-art performance on many benchmarks
-\item But fragile and hard to tune
-\item Lots of "recipes" still today
-\item Hard to guarantee convergence or performance
-\item CNNs = method of choice for structured data (images, sound, time series\ldots)
+	\item Versatile, online training
+	\item State-of-the-art performance on many benchmarks
+	\item But fragile and hard to tune
+	\item Lots of "recipes" still today
+	\item CNNs = method of choice for structured data (images, sound, time series\ldots)
+	\item Lots of flavors of deep learning: RNNs, generative models, language models, auto-encoders, etc.
 \end{itemize}
 \begin{center}
-\includegraphics[width=7cm]{img/IllustrationNeuralNet.pdf}
+	\includegraphics[width=7cm]{img/IllustrationNeuralNet.pdf}
 \end{center}
 \end{frame}
 
-\begin{frame}{Schedule}
-\begin{enumerate}
-\item General introduction and motivation \Checkmark \\
-{\small \it How does ML fit within your business process.\\
-Why you should take time to understand what's under the hood in ML.}
-\item The importance of data pre-processing \Checkmark \\
-{\small \it A practical illustration.}
-\item A geometrical approach to ML \Checkmark \\
-{\small \it Support Vector Machines and a bit of kernel theory.}
-\item A probabilistic approach to ML \Checkmark \\
-{\small \it Naive Bayes Classification and Gaussian Processes.}
-\item A connectionist perspective \Checkmark \\
-{\small \it From mimicking the human brain to Artificial Neural Networks.\\
-Deep Learning.}
-\item Ensembles of explainable models\\
-{\small \it Decision Trees, Bagging and Random Forests.}
-\item Practical session, discussion and conclusion
-\end{enumerate}
+\begin{frame}{Schedule (flexible)}
+	\begin{tabular}{ll}
+		\textbf{day 1} & \\
+		09:00 - 10:00 & Introduction\\
+		& {\footnotesize Context and definitions}\\
+		10:00 - 10:30 & The importance of pre-processing\\
+		& {\footnotesize A practical example on text data}\\
+		10:45 - 12:15 & A geometrical approach to Machine Learning\\
+		& {\footnotesize An intro to support vector machines and a bit of kernel theory}\\
+		12:15 - 13:30 & Lunch break\\
+		13:30 - 17:30 & A probabilistic approach to Machine Learning\\
+		& {\footnotesize Bayesian modeling, naive Bayes blassifiers and Gaussian Processes}\\
+		\hline
+		\textbf{day 2}&\\
+		09:00 - 12:15 & A connexionist perspective on Machine Learning\\
+		& {\footnotesize An introduction to Artificial Neural Networks and to Deep Learning}\\
+		12:15 - 13:30 & Lunch break\\
+		13:30 - 16:30 & Ensemble of explainable models\\
+		& {\footnotesize Decision trees, bagging and random forests}\\
+		16:30 - 17:30 & Wrap-up and discussion
+	\end{tabular}
 \end{frame}
 
 \begin{frame}{Decision trees}
-\begin{itemize}
-\item Easy to interpret and to explain
-\item Poor representative power
-\item Greedy growth procedure $\Rightarrow$ suboptimal resulting tree
-\item Offline training
-\item Very sensitive to noise in the input data
-\end{itemize}
+	\begin{itemize}
+		\item Easy to interpret and to explain
+		\item Poor representative power
+		\item Greedy growth procedure $\Rightarrow$ suboptimal resulting tree
+		\item Offline training
+		\item Very sensitive to noise in the input data
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Random Forests}
-\begin{itemize}
-\item RF = decision trees + random feature selection + Bagging
-\item Robust, scalable, out-of-the-box classifier
-\end{itemize}
-$\Rightarrow$ excellent multi-purpose benchmarking algorithm!
+	\begin{itemize}
+		\item RF = decision trees + random feature selection + Bagging
+		\item Robust, scalable, out-of-the-box classifier
+	\end{itemize}
+	$\Rightarrow$ excellent multi-purpose benchmarking algorithm!
 \end{frame}
 
-\begin{frame}{Schedule}
-\begin{enumerate}
-\item General introduction and motivation \Checkmark \\
-{\small \it How does ML fit within your business process.\\
-Why you should take time to understand what's under the hood in ML.}
-\item The importance of data pre-processing \Checkmark \\
-{\small \it A practical illustration.}
-\item A geometrical approach to ML \Checkmark \\
-{\small \it Support Vector Machines and a bit of kernel theory.}
-\item A probabilistic approach to ML \Checkmark \\
-{\small \it Naive Bayes Classification and Gaussian Processes.}
-\item A connectionist perspective \Checkmark \\
-{\small \it From mimicking the human brain to Artificial Neural Networks.\\
-Deep Learning.}
-\item Ensembles of explainable models \Checkmark \\
-{\small \it Decision Trees, Bagging and Random Forests.}
-\item Practical session, discussion and conclusion
-\end{enumerate}
+\begin{frame}{Schedule (flexible)}
+	\begin{tabular}{ll}
+		\textbf{day 1} & \\
+		09:00 - 10:00 & Introduction\\
+		& {\footnotesize Context and definitions}\\
+		10:00 - 10:30 & The importance of pre-processing\\
+		& {\footnotesize A practical example on text data}\\
+		10:45 - 12:15 & A geometrical approach to Machine Learning\\
+		& {\footnotesize An intro to support vector machines and a bit of kernel theory}\\
+		12:15 - 13:30 & Lunch break\\
+		13:30 - 17:30 & A probabilistic approach to Machine Learning\\
+		& {\footnotesize Bayesian modeling, naive Bayes blassifiers and Gaussian Processes}\\
+		\hline
+		\textbf{day 2}&\\
+		09:00 - 12:15 & A connexionist perspective on Machine Learning\\
+		& {\footnotesize An introduction to Artificial Neural Networks and to Deep Learning}\\
+		12:15 - 13:30 & Lunch break\\
+		13:30 - 16:30 & Ensemble of explainable models\\
+		& {\footnotesize Decision trees, bagging and random forests}\\
+		16:30 - 17:30 & Wrap-up and discussion
+	\end{tabular}
 \end{frame}
 
-\begin{frame}{Extra things}
-\begin{itemize}
-\item Installing anaconda, jupyter, etc.
-\item ML research: arXiv, JMLR, MLJ, IEEE PAMI, NeurIPS, ICML, ICLR...
-\item datasets: Kaggle, UCI, ImageNet, CIFAR...
-\item Other algorithms? (scikit-learn documentation or other notebooks)
-\item Dataviz: upstream methods (PCA...) and storytelling (Tableau...)
-\item What should I look for in a data scientist's CV?
-\item The price to pay for AI: individual responsibility, collective literacy, guiding principles.
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Schedule}
-\begin{enumerate}
-\item General introduction and motivation \Checkmark \\
-{\small \it How does ML fit within your business process.\\
-Why you should take time to understand what's under the hood in ML.}
-\item The importance of data pre-processing \Checkmark \\
-{\small \it A practical illustration.}
-\item A geometrical approach to ML \Checkmark \\
-{\small \it Support Vector Machines and a bit of kernel theory.}
-\item A probabilistic approach to ML \Checkmark \\
-{\small \it Naive Bayes Classification and Gaussian Processes.}
-\item A connectionist perspective \Checkmark \\
-{\small \it From mimicking the human brain to Artificial Neural Networks.\\
-Deep Learning.}
-\item Ensembles of explainable models \Checkmark \\
-{\small \it Decision Trees, Bagging and Random Forests.}
-\item Practical session, discussion and conclusion \Checkmark
-\end{enumerate}
-\end{frame}
-
-\begin{frame}{Course goals}
-\small
-By the end of the class, you should be able to:
-\begin{itemize}
-\item implement a generic workflow of data analysis for your application field;
-\item know the main bottlenecks and challenges of data-driven approaches;
-\item link some field problems to their formal Machine Learning counterparts;
-\item know the main categories of Machine Learning algorithms and which formal problem they solve;
-\item know the name and principles of some key methods in Machine Learning:
-\begin{itemize}
-\item SVM,
-\item kernel methods,
-\item Naive Bayes Classification,
-\item Gaussian Processes,
-\item Artificial Neural Networks,
-\item Deep Learning,
-\item Random Forests;
-\end{itemize} 
-\item know the existence of scikit-learn and its API.
-\end{itemize}
+\begin{frame}{Contents}
+	\begin{tabular}{@{}ll}
+		What this class is about: & key concepts in Machine Learning (ML)\\
+		What it is not about: & data processing, AI, big data, etc.
+	\end{tabular}
+	
+	\vspace{2em}
+	\indent What this class is useful for:
+	\begin{itemize}
+		\item[] Evaluate statements/projects/proposals about ML or using ML
+		\item[] Lay the ground for deeper exploration of technical ML topics
+	\end{itemize}
+	
+	\vspace{2em}
+	Steps towards this goal:
+	\begin{itemize}
+		\item Defining vocabulary, debunking misconceptions, naming tasks and problems
+		\item Situating ML within data analysis
+		\item Diving into the technicalities of 4 different perspectives on ML
+		\begin{itemize}
+			\item A geometrical perspective (support vector machines and more)
+			\item A probabilistic perspective (Bayesian modeling methods)
+			\item A connexionist perspective (neural networks and deep learning)
+			\item An ensemblist perspective (incl. random forests)
+		\end{itemize}
+	\end{itemize}
 \end{frame}
 
 \end{document}
